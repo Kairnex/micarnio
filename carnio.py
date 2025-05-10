@@ -1,4 +1,5 @@
 import asyncio
+import warnings
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
@@ -115,10 +116,22 @@ async def main():
     await app.run_polling()  # Replaced start_polling with run_polling
     print("Bot started.")
 
+async def shutdown(app):
+    """Gracefully shut down the bot."""
+    await app.shutdown()
+    print("Bot has been shut down.")
+
 # === Runner ===
 if __name__ == "__main__":
+    # Suppress cryptography warnings (they are not critical)
+    warnings.filterwarnings("ignore", category=RuntimeWarning, message="coroutine 'Application.shutdown' was never awaited")
+    
     loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(main())  # Properly run the main function without closing the event loop
+    except KeyboardInterrupt:
+        print("Bot is being shut down...")
     except Exception as e:
         print(f"Error starting bot: {e}")
+    finally:
+        loop.run_until_complete(shutdown(app))  # Gracefully shutdown the bot
