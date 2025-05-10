@@ -113,14 +113,14 @@ async def main():
 
     await app.initialize()
     print("Bot initialized.")
-    await app.run_polling()  # Replaced start_polling with run_polling
-    print("Bot started.")
-    return app  # Return the app instance to be used in shutdown
-
-async def shutdown(app):
-    """Gracefully shut down the bot."""
-    await app.shutdown()
-    print("Bot has been shut down.")
+    
+    # Start polling and manage shutdown gracefully using async with
+    try:
+        async with app:
+            print("Bot started.")
+            await app.run_polling()  # Run polling to keep the bot alive
+    except KeyboardInterrupt:
+        print("Bot interrupted and shutting down...")
 
 # === Runner ===
 if __name__ == "__main__":
@@ -129,10 +129,6 @@ if __name__ == "__main__":
     
     loop = asyncio.get_event_loop()
     try:
-        app = loop.run_until_complete(main())  # Get the app instance from the main function
-    except KeyboardInterrupt:
-        print("Bot is being shut down...")
+        loop.run_until_complete(main())  # Main execution
     except Exception as e:
         print(f"Error starting bot: {e}")
-    finally:
-        loop.run_until_complete(shutdown(app))  # Gracefully shutdown the bot
