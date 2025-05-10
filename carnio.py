@@ -117,7 +117,8 @@ async def main():
 
 # === Runner ===
 if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
     try:
-        asyncio.run(main())  # Properly run the main function
+        loop.run_until_complete(main())  # Properly run the main function without closing the event loop
     except Exception as e:
         print(f"Error starting bot: {e}")
