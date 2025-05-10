@@ -14,7 +14,7 @@ from pymongo import MongoClient
 ADMIN_ID = 6999372290  # 🔁 Replace with your Telegram ID
 BOT_TOKEN = "8006165946:AAFoIk1txo28CGOg1ekOrGuEyG-VkIfRj6c"
 
-MONGO_URI = "mongodb+srv://codexkairnex:gm6xSxXfRkusMIug@cluster0.bplk1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+MONGO_URI = "mongodb+srv://ayanosuvii0925:subhichiku123@cluster0.uw8yxkl.mongodb.net/mydatabase"
 client = MongoClient(MONGO_URI)
 db = client["Micarnio"]
 users_collection = db["users"]
