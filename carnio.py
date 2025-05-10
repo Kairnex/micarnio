@@ -86,7 +86,7 @@ async def main():
     app.add_handler(MessageHandler(filters.TEXT & filters.User(ADMIN_ID) & filters.REPLY, reply_from_admin))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.User(ADMIN_ID), forward_to_admin))
 
- if __name__ == "__main__":
+    if __name__ == "__main__":
     try:
         asyncio.run(main())
     except RuntimeError as e:
