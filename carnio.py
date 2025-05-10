@@ -112,10 +112,8 @@ async def main():
 
     await app.initialize()
     print("Bot initialized.")
-    await app.start()
+    await app.run_polling()  # Replaced start_polling with run_polling
     print("Bot started.")
-    await app.updater.start_polling()
-    print("Polling started.")
 
 # === Runner ===
 if __name__ == "__main__":
