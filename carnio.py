@@ -114,21 +114,15 @@ async def main():
     await app.initialize()
     print("Bot initialized.")
     
-    # Start polling and manage shutdown gracefully using async with
-    try:
-        async with app:
-            print("Bot started.")
-            await app.run_polling()  # Run polling to keep the bot alive
-    except KeyboardInterrupt:
-        print("Bot interrupted and shutting down...")
+    # Start polling
+    await app.run_polling()  # This method manages the event loop internally
 
 # === Runner ===
 if __name__ == "__main__":
     # Suppress cryptography warnings (they are not critical)
     warnings.filterwarnings("ignore", category=RuntimeWarning, message="coroutine 'Application.shutdown' was never awaited")
     
-    loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(main())  # Main execution
+        asyncio.run(main())  # asyncio.run takes care of the event loop lifecycle
     except Exception as e:
         print(f"Error starting bot: {e}")
