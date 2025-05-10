@@ -86,7 +86,11 @@ async def main():
     app.add_handler(MessageHandler(filters.TEXT & filters.User(ADMIN_ID) & filters.REPLY, reply_from_admin))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.User(ADMIN_ID), forward_to_admin))
 
-    if __name__ == "__main__":
+    print("Bot is running...")
+    await app.run_polling()
+
+# Correct position of the execution block
+if __name__ == "__main__":
     try:
         asyncio.run(main())
     except RuntimeError as e:
@@ -95,7 +99,3 @@ async def main():
             loop.create_task(main())
         else:
             raise
-            
-    print("Bot is running...")
-    await app.run_polling()
-
