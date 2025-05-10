@@ -120,6 +120,6 @@ async def main():
 # === Runner ===
 if __name__ == "__main__":
     try:
-        asyncio.run(main())  # This will properly handle the event loop.
+        asyncio.run(main())  # Properly run the main function
     except Exception as e:
         print(f"Error starting bot: {e}")
