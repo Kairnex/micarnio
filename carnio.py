@@ -1,6 +1,7 @@
 from telegram import Update, Message
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
 from pymongo import MongoClient
+import asyncio
 
 # Replace with your Telegram user ID and Bot token
 ADMIN_ID = 6999372290  # 👈 Replace with your ID
@@ -89,5 +90,13 @@ async def main():
     await app.run_polling()
 
 if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except RuntimeError as e:
+        if "event loop is already running" in str(e):
+            loop = asyncio.get_event_loop()
+            loop.create_task(main())
+        else:
+            raiseif __name__ == "__main__":
     import asyncio
     asyncio.run(main())
