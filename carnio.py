@@ -91,11 +91,14 @@ async def main():
 
 # Correct position of the execution block
 if __name__ == "__main__":
+    async def runner():
+        await main()
+
     try:
-        asyncio.run(main())
-    except RuntimeError as e:
-        if "event loop is already running" in str(e):
-            loop = asyncio.get_event_loop()
-            loop.create_task(main())
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            loop.create_task(runner())  # Non-blocking
         else:
-            raise
+            loop.run_until_complete(runner())  # Blocking
+    except Exception as e:
+        print(f"Error starting bot: {e}")
